@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +20,7 @@ namespace Application.UseCases.LandCategory.Commands
                 if (@LandCategory == null)
                     throw new Exception("No LandCategory found.");
                 @LandCategory.IsDeleted = true;
+                @LandCategory.DeletedDate = DateTime.Now;
                 ApplicationDbContext.LandCategories.Update(@LandCategory);
                 await ApplicationDbContext.SaveChangesAsync();
                 return new Result();

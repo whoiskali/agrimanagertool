@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,11 +16,12 @@ namespace Application.UseCases.Land.Commands
         {
             public async Task<Result> Handle(Command command, CancellationToken cancellationToken)
             {
-                var @LandCategory = await ApplicationDbContext.Lands.SingleOrDefaultAsync(x => x.Id == command.Id);
-                if (@LandCategory == null)
+                var @Land = await ApplicationDbContext.Lands.SingleOrDefaultAsync(x => x.Id == command.Id);
+                if (@Land == null)
                     throw new Exception("No LandCategory found.");
-                @LandCategory.IsDeleted = true;
-                ApplicationDbContext.Lands.Update(@LandCategory);
+                @Land.IsDeleted = true;
+                @Land.DeletedDate = DateTime.Now;
+                ApplicationDbContext.Lands.Update(@Land);
                 await ApplicationDbContext.SaveChangesAsync();
                 return new Result();
             }

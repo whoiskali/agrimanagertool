@@ -19,6 +19,7 @@ namespace Application.UseCases.Events.Commands
                 if (@event == null)
                     throw new Exception("No event found.");
                 @event.IsDeleted = true;
+                @event.DeletedDate = DateTime.Now;
                 ApplicationDbContext.Events.Update(@event);
                 await ApplicationDbContext.SaveChangesAsync();
                 return new Result();

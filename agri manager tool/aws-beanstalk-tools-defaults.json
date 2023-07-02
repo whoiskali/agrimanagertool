@@ -8,7 +8,7 @@
     "environment"    : "agrimanagertool-test",
     "enable-xray"    : false,
     "enhanced-health-type" : "basic",
-    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-08d43ffa38fe3cb1c\";\"aws:ec2:vpc,Subnets\"=\"subnet-0556cebed0db57ddb\";\"aws:ec2:vpc,ELBSubnets\"=\"subnet-0556cebed0db57ddb,subnet-096ea01ea99b8d388,subnet-072e6cdc0dce3543b\"",
+    "additional-options"   : "",
     "solution-stack"       : "64bit Amazon Linux 2 v2.5.4 running .NET Core",
     "environment-type"     : "LoadBalanced",
     "cname"                : "agrimanagertool-test",

@@ -59,11 +59,29 @@ namespace agri_manager_tool.Controllers
         [HttpGet("Data")]
         public async Task<IActionResult> Data()
         {
-            
+
             using var tr = dbContext.Database.BeginTransaction();
             try
             {
                 var query = new GetData.Command((int)claimsPrincipal.GetUserId());
+                var result = await mediator.Send(query);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [Authorize]
+        [HttpGet("")]
+        public async Task<IActionResult> Get()
+        {
+
+            using var tr = dbContext.Database.BeginTransaction();
+            try
+            {
+                var query = new GetUsers.Query();
                 var result = await mediator.Send(query);
                 return Ok(result);
             }

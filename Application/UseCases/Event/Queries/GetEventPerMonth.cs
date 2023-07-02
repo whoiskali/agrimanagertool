@@ -23,7 +23,7 @@ namespace Application.UseCases.Event.Queries
         {
             public async Task<List<Result>> Handle(Query query, CancellationToken cancellationToken)
             {
-                var result = await ApplicationDbContext.Events.Where(x => x.Schedule.Year == query.DateTime.Year).Select(x => new Result
+                var result = await ApplicationDbContext.Events.Where(x => x.Schedule.Year == query.DateTime.Year && !x.IsDeleted).Select(x => new Result
                 {
                     Category = x.Category,
                     EventName = x.Title,

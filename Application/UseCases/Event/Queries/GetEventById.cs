@@ -26,7 +26,7 @@ namespace Application.UseCases.Events.Queries
         {
             public async Task<Result> Handle(Query query, CancellationToken cancellationToken)
             {
-                var data = await ApplicationDbContext.Events.Include(x => x.Land).Where(x => x.Id == query.Id && !x.IsDeleted).Select(x => new Result
+                var data = await ApplicationDbContext.Events.Include(x => x.Land).ThenInclude(x => x.Polylines).Where(x => x.Id == query.Id && !x.IsDeleted).Select(x => new Result
                 {
                     Category = x.Category.ToString(),
                     Description = x.Description,

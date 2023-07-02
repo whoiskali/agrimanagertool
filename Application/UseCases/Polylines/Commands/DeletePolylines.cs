@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +20,7 @@ namespace Application.UseCases.Polylines.Commands
                 if (@Polylines == null)
                     throw new Exception("No Polylines found.");
                 @Polylines.IsDeleted = true;
+                @Polylines.DeletedDate = DateTime.Now;
                 ApplicationDbContext.Polylines.Update(@Polylines);
                 await ApplicationDbContext.SaveChangesAsync();
                 return new Result();

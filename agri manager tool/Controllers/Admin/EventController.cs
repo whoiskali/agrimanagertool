@@ -28,7 +28,7 @@ namespace agri_manager_tool.Controllers.Admin
             this.dbContext = dbContext;
         }
 
-        public record EventCommand(int Id, DateTime Schedule, string Title, string Description);
+        public record EventCommand(int Id, DateTime? Schedule, string Title, string Description, EventCategory Category, int? LandId);
 
         [Authorize]
         [HttpPost]
@@ -114,6 +114,28 @@ namespace agri_manager_tool.Controllers.Admin
                 if (!claimsPrincipal.IsInRole(Usertype.Administrator.ToString()))
                     throw new UnauthorizedAccessException();
 
+                var result = await mediator.Send(query);
+                return Ok(result);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("No permission to take this action.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("Title/{title}")]
+        public async Task<IActionResult> GetByName(string title)
+        {
+            try
+            {
+                if (!claimsPrincipal.IsInRole(Usertype.Administrator.ToString()))
+                    throw new UnauthorizedAccessException();
+                var query = new GetEventByTitle.Query(title);
                 var result = await mediator.Send(query);
                 return Ok(result);
             }
